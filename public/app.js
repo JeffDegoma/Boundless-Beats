@@ -17,7 +17,7 @@ $(document).ready(function(){
 	    	data: {
 		      	k: "262446-Sendmeba-QIY9SFUH",
 			    q: artist,
-			    limit: 5,
+			    limit: 8,
 		      	type: "music",
 		      	info: 1
 		    },
@@ -76,6 +76,8 @@ $(document).ready(function(){
 		let songPlayer = `<iframe src="https://embed.spotify.com/?uri=spotify:track:${songId}" width="288" frameborder="0" allowtransparency="true"></iframe>`
 		$('#player').append(songPlayer)
 	})
+
+
 
 
 //------------Ajax Error-----------//

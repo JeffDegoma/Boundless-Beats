@@ -24,10 +24,27 @@ header {
 }
 
 
+
+.hero-message {
+  background-color: #333333;
+  opacity: 0.6;
+  width: 500px;
+  margin: 0 auto;
+  padding: 8px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 26px;
+  color: #ffffff;
+  margin-top: 70px;
+  margin-bottom: 30px;
+}
+
+
+
 form {
     margin: 0 auto;
     text-align: center;
-    padding-top: 100px;
+    padding-top: 40px;
 }
 
 
@@ -37,7 +54,7 @@ input {
     font-size: 15px;
     border-style: solid;
     border-color: #8e8e8e;
-    margin-top: 30px;
+    margin-top: 20px;
     position: relative;
     margin-bottom: 20px;
 
@@ -84,7 +101,7 @@ input[type=text]:focus {
 
 
 html,body {
-  background-image: url('/assets/sendme-background.jpg');
+  background-image: url('/assets/bb-background-2.jpg');
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
