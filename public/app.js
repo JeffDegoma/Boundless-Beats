@@ -47,10 +47,19 @@ $(document).ready(function(){
 				type: 'artist',
 			},
 
-			success: ((data)=>{
+			success: (data => {
 				let id = data.artists.items[0].id
-				getSpotifyTopTracksApi(id)
-			})
+				if(id) {
+					getSpotifyTopTracksApi(id)
+				}
+				else {
+					swal("no id")
+				}
+			}),
+
+			fail: (err => {
+				swal(err)
+			}) 
 		})
 	})
 
@@ -80,19 +89,6 @@ $(document).ready(function(){
 
 
 
-//------------Ajax Error-----------//
-
-	$(() =>{
-	    $.ajaxSetup({
-	        error:  ((x, status, error) =>{
-	            if (x.status == 400) {
-	             alert("An error occurred: " + status + "Error: " + error);
-	            }
-	        })
-	    });
-	});
-
-
 //-------------Submit Handler-------------//
 
 	$('.search').on('click',(e)=>{
@@ -110,6 +106,14 @@ $(document).ready(function(){
 			swal(`You've already searched for ${userInput.toUpperCase()}`)
 		 }
 	})
+
+	$('.restart').on('click', (e)=>{
+		e.preventDefault();
+		$('#player').html('');
+		searchArtists = [];
+		$('.song-title').val('');
+	})
+		
 
 
 })

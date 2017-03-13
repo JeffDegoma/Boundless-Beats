@@ -24,6 +24,10 @@ header {
 }
 
 
+.restart{
+  float: right;
+}
+
 
 .hero-message {
   background-color: #333333;
@@ -80,7 +84,7 @@ input[type=text]:focus {
     width: 300px;
 }
 
-.search {
+.search, .restart {
     background-color: #1A202F;
     border-color: #1A202F;
     color: white;
@@ -91,7 +95,7 @@ input[type=text]:focus {
     transition: all ease 0.4s;
 }
 
-.search:hover {
+.restart:hover, .search:hover {
     background-color: #083312;
     border-color: #083312;
     cursor: pointer;
