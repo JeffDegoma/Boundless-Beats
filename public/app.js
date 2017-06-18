@@ -1,54 +1,45 @@
 $(document).ready(function(){
-	const searchedArtists = []
-	const resultsPlaceholder = document.getElementById('results')
-
-
-
+	let searchedArtists = []
 
 
 //----------- Get data from TasteKid API --------------//
 
-
 	const getTasteKidApi = ((artist, callback)=>{
 		$.ajax({
-			url: "https://www.tastekid.com/api/similar",
-	    	type: 'GET',
-	    	dataType: 'jsonp',
+	    	url: "/find-similar-artist",
+	    	type: 'POST',
 	    	data: {
-		      	k: "262446-Sendmeba-QIY9SFUH",
-			    q: artist,
-			    limit: 8,
-		      	type: "music",
-		      	info: 1
+				artist
 		    },
-
 		    success: ((data)=>{
-		      if(data.Similar.Results.length > 0) {
-		        let similarArtist = data.Similar.Results;
-		        	similarArtist.forEach(((artist)=>{
-		        	 	getSpotifyArtistId(artist.Name)
-		        	}))
-		      }
-		      else {
-		      	swal("Well this is embarrassing." , "We can't find that artist..")
-		      }
+		    	console.log("Data", data)
+		    	makeSongPlayer(data)
+		     	// if(data.Similar.Results.length > 0) {
+		      //   let similarArtist = data.Similar.Results;
+		      //   	similarArtist.forEach(((artist)=>{
+		      //   	 	getSpotifyArtistId(artist.Name)
+		      //   	}))
+		      // 	}
+		      // 	else {
+		      // 	swal("Well this is embarrassing." , "We can't find that artist..")
+		      // 	}
 		    })
 		})
 	})
 
 //---------- Get data from Spotify API ----------//
-
-	
+	//find id based by artist
 	const getSpotifyArtistId = ((artist) =>{
 		$.ajax({
-			url: 'https://api.spotify.com/v1/search',
+			method: 'POST',
+			url: '/get-artist',
+			dataType: 'json',
 			data: {
-				q: artist,
-				type: 'artist',
+				artist
 			},
-
 			success: (data => {
-				let id = data.artists.items[0].id
+				//data that comes in is id
+				let id = data
 				if(id) {
 					getSpotifyTopTracksApi(id)
 				}
@@ -56,7 +47,6 @@ $(document).ready(function(){
 					swal("no id")
 				}
 			}),
-
 			fail: (err => {
 				swal(err)
 			}) 
@@ -64,30 +54,30 @@ $(document).ready(function(){
 	})
 
 	const getSpotifyTopTracksApi = ((artistId) => {
-		 $.ajax({
-			url: `https://api.spotify.com/v1/artists/${artistId}/top-tracks`,
+		$.ajax({
+		 	method: 'POST',
+			url: `/get-tracks`,
+			dataType: 'json',
 			data: {
-				id: artistId,
-				limit: 5,
+				artistId,
 				country: 'ES'
 			},
-
 			success: ((data)=>{
-				let songId = data.tracks[0].id
-				makeSongPlayer(songId)
-				})
+				let songId = data
+				if(songId){
+					makeSongPlayer(songId)
+				}
+			}),
+			fail: (err => {
+				swal(err)
 			})
+		})
 	})
-
-
 
 	const makeSongPlayer = ((songId)=>{
 		let songPlayer = `<iframe src="https://embed.spotify.com/?uri=spotify:track:${songId}" width="288" frameborder="0" allowtransparency="true"></iframe>`
 		$('#player').append(songPlayer)
 	})
-
-
-
 
 //-------------Submit Handler-------------//
 
@@ -110,10 +100,7 @@ $(document).ready(function(){
 	$('.restart').on('click', (e)=>{
 		e.preventDefault();
 		$('#player').html('');
-		searchArtists = [];
+		searchedArtists = [];
 		$('.song-title').val('');
 	})
-		
-
-
 })
