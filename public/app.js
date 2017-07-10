@@ -1,7 +1,6 @@
 $(document).ready(function(){
 	let searchedArtists = []
 
-
 //----------- Get data from TasteKid API --------------//
 
 	const getTasteKidApi = ((artist, callback)=>{
@@ -11,73 +10,16 @@ $(document).ready(function(){
 	    	data: {
 				artist
 		    },
-		    success: ((data)=>{
-		    	console.log("Data", data)
-		    	makeSongPlayer(data)
-		     	// if(data.Similar.Results.length > 0) {
-		      //   let similarArtist = data.Similar.Results;
-		      //   	similarArtist.forEach(((artist)=>{
-		      //   	 	getSpotifyArtistId(artist.Name)
-		      //   	}))
-		      // 	}
-		      // 	else {
-		      // 	swal("Well this is embarrassing." , "We can't find that artist..")
-		      // 	}
+		    success: ((ids) => {
+		    	const toAppend = ids.map(makeSongPlayer)
+		    	$('#player').append(toAppend)
 		    })
 		})
 	})
 
-//---------- Get data from Spotify API ----------//
-	//find id based by artist
-	const getSpotifyArtistId = ((artist) =>{
-		$.ajax({
-			method: 'POST',
-			url: '/get-artist',
-			dataType: 'json',
-			data: {
-				artist
-			},
-			success: (data => {
-				//data that comes in is id
-				let id = data
-				if(id) {
-					getSpotifyTopTracksApi(id)
-				}
-				else {
-					swal("no id")
-				}
-			}),
-			fail: (err => {
-				swal(err)
-			}) 
-		})
-	})
-
-	const getSpotifyTopTracksApi = ((artistId) => {
-		$.ajax({
-		 	method: 'POST',
-			url: `/get-tracks`,
-			dataType: 'json',
-			data: {
-				artistId,
-				country: 'ES'
-			},
-			success: ((data)=>{
-				let songId = data
-				if(songId){
-					makeSongPlayer(songId)
-				}
-			}),
-			fail: (err => {
-				swal(err)
-			})
-		})
-	})
-
-	const makeSongPlayer = ((songId)=>{
-		let songPlayer = `<iframe src="https://embed.spotify.com/?uri=spotify:track:${songId}" width="288" frameborder="0" allowtransparency="true"></iframe>`
-		$('#player').append(songPlayer)
-	})
+	const makeSongPlayer = (songId) => {
+		return `<iframe src="https://embed.spotify.com/?uri=spotify:track:${songId}" width="288" frameborder="0" allowtransparency="true"></iframe>`
+	}
 
 //-------------Submit Handler-------------//
 
@@ -93,7 +35,7 @@ $(document).ready(function(){
 			getTasteKidApi(userInput)
 		 }
 		else{
-			swal(`You've already searched for ${userInput.toUpperCase()}`)
+			swal(`You've already searched for ${userInput.toUpperCase()}!`)
 		 }
 	})
 
@@ -103,4 +45,5 @@ $(document).ready(function(){
 		searchedArtists = [];
 		$('.song-title').val('');
 	})
+	
 })
