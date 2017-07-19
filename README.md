@@ -6,7 +6,7 @@
 # Launching
 > npm start
 # About
-  BoundlessBeats is an app that will retrieve songs of a related artist based on the user search.
+  BoundlessBeats is an app that will retrieve songs of a related artist based on the user search. This app was built in response to Spotify's public search feature w
 # Screenshots
 
 # Technology
