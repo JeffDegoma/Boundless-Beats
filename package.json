@@ -2,9 +2,10 @@
   "name": "api-hack",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "babel-node server.js"
   },
   "keywords": [],
   "author": "",
@@ -16,5 +17,9 @@
     "express": "^4.15.2",
     "request": "^2.81.0",
     "spotify-web-api-node": "^2.4.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
   }
 }
